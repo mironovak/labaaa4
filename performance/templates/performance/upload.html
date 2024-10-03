@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Student Performance</title>
+</head>
+<body>
+    <h1>Загрузить успеваемость учащихся</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Готово</button>
+    </form>
+</body>
+</html>
