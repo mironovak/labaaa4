@@ -1,0 +1,85 @@
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>List of Student Performances</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Список успеваемости студентов</h1>
+    <input type="text" id="search" placeholder="Search...">
+    <ul id="results">
+        {% for student in students %}
+            <li>{{ student.student_name }} - {{ student.subject }}: {{ student.grade }}
+                <a href="{% url 'edit_db' student.pk %}">Edit</a>
+                <a href="{% url 'delete_db' student.pk %}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <script>
+        document.getElementById('search').addEventListener('input', function() {
+            fetch(`/performance/search_db?query=${this.value}`)
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(data, 'application/xml');
+                    const results = document.getElementById('results');
+                    results.innerHTML = '';
+                    const resultElements = xmlDoc.getElementsByTagName('result');
+                    for (let i = 0; i < resultElements.length; i++) {
+                        const file = resultElements[i].getElementsByTagName('file')[0].textContent;
+                        const text = resultElements[i].getElementsByTagName('text')[0].textContent;
+                        const li = document.createElement('li');
+                        li.textContent = `${file}: ${text}`;
+                        results.appendChild(li);
+                    }
+                });
+        });
+    </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список успеваемости студентов</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Список успеваемости студентов</h1>
+    <input type="text" id="search" placeholder="Поиск...">
+    <button id="search-button">Поиск</button>
+    <ul id="results">
+        {% for student in students %}
+            <li>{{ student.student_name }} - {{ student.subject }}: {{ student.grade }}
+                <a href="{% url 'edit_db' student.pk %}">Редактировать</a>
+                <a href="{% url 'delete_db' student.pk %}">Удалить</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <script>
+        document.getElementById('search-button').addEventListener('click', function() {
+            value = document.getElementById('search').value;
+            console.log(value);
+            fetch(`/performance/search_text?query=${value}`)
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(data, 'application/xml');
+                    const results = document.getElementById('results');
+                    results.innerHTML = '';
+
+                    const resultElements = xmlDoc.getElementsByTagName('result');
+                    for (let i = 0; i < resultElements.length; i++) {
+                        const file = resultElements[i].getElementsByTagName('file')[0].textContent;
+                        const text = resultElements[i].getElementsByTagName('text')[0].textContent;
+                        const li = document.createElement('li');
+                        li.textContent = `${file}: ${text}`;
+                        results.appendChild(li);
+                    }
+                });
+
+        });
+    </script>
+</body>
+</html>

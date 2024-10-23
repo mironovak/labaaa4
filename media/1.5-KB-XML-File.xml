@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+  <entry>
+    <id>1</id>
+    <name>Item 1</name>
+    <description>This is the first item.</description>
+    <price>10.99</price>
+  </entry>
+  <entry>
+    <id>2</id>
+    <name>Item 2</name>
+    <description>This is the second item.</description>
+    <price>15.99</price>
+  </entry>
+  <entry>
+    <id>3</id>
+    <name>Item 3</name>
+    <description>This is the third item.</description>
+    <price>8.99</price>
+  </entry>
+  <entry>
+    <id>4</id>
+    <name>Item 4</name>
+    <description>This is the fourth item.</description>
+    <price>12.99</price>
+  </entry>
+  <entry>
+    <id>5</id>
+    <name>Item 5</name>
+    <description>This is the fifth item.</description>
+    <price>19.99</price>
+  </entry>
+  <entry>
+    <id>6</id>
+    <name>Item 6</name>
+    <description>This is the sixth item.</description>
+    <price>24.99</price>
+  </entry>
+  <entry>
+    <id>7</id>
+    <name>Item 7</name>
+    <description>This is the seventh item.</description>
+    <price>7.99</price>
+  </entry>
+  <entry>
+    <id>8</id>
+    <name>Item 8</name>
+    <description>This is the eighth item.</description>
+    <price>11.99</price>
+  </entry>
+  <entry>
+    <id>9</id>
+    <name>Item 9</name>
+    <description>This is the ninth item.</description>
+    <price>16.99</price>
+  </entry>
+  <entry>
+    <id>10</id>
+    <name>Item 10</name>
+    <description>This is the tenth item.</description>
+    <price>22.99</price>
+  </entry>
+</data>

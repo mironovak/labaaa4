@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload XML File</title>
+</head>
+<body>
+    <h1>Загрузить XML-файл</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="file">
+        <button type="submit">Загрузить</button>
+    </form>
+</body>
+</html>
