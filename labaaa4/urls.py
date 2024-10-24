@@ -27,6 +27,9 @@ urlpatterns = [
     path('performance/', include('performance.urls')),
     path('', home, name='home'),
 ] 
-
+# Этот оператор проверяет, включен ли режим отладки. Если да, выполняется следующий блок кода.
 if settings.DEBUG:
+    # settings.MEDIA_URL: Это URL-адрес, по которому будут доступны загруженные медиафайлы. 
+    # document_root=settings.MEDIA_ROOT: Это параметр функции static, который указывает на 
+    # корневую директорию на сервере, где хранятся загруженные медиафайлы. 
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

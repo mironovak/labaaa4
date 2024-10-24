@@ -1,44 +1,4 @@
 
-
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>List of Student Performances</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
-    <h1>Список успеваемости студентов</h1>
-    <input type="text" id="search" placeholder="Search...">
-    <ul id="results">
-        {% for student in students %}
-            <li>{{ student.student_name }} - {{ student.subject }}: {{ student.grade }}
-                <a href="{% url 'edit_db' student.pk %}">Edit</a>
-                <a href="{% url 'delete_db' student.pk %}">Delete</a>
-            </li>
-        {% endfor %}
-    </ul>
-    <script>
-        document.getElementById('search').addEventListener('input', function() {
-            fetch(`/performance/search_db?query=${this.value}`)
-                .then(response => response.text())
-                .then(data => {
-                    const parser = new DOMParser();
-                    const xmlDoc = parser.parseFromString(data, 'application/xml');
-                    const results = document.getElementById('results');
-                    results.innerHTML = '';
-                    const resultElements = xmlDoc.getElementsByTagName('result');
-                    for (let i = 0; i < resultElements.length; i++) {
-                        const file = resultElements[i].getElementsByTagName('file')[0].textContent;
-                        const text = resultElements[i].getElementsByTagName('text')[0].textContent;
-                        const li = document.createElement('li');
-                        li.textContent = `${file}: ${text}`;
-                        results.appendChild(li);
-                    }
-                });
-        });
-    </script>
-</body>
-</html> -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,29 +17,51 @@
             </li>
         {% endfor %}
     </ul>
+
     <script>
+        // Метод getElementById используется для получения элемента DOM (Document Object Model) с указанным 
+        // идентификатором ('search-button'). 
+        // Это кнопка, по которой пользователь нажимает для начала поиска.
+        // Метод addEventListener добавляет обработчик события к элементу. В данном случае он слушает событие click
         document.getElementById('search-button').addEventListener('click', function() {
-            value = document.getElementById('search').value;
-            console.log(value);
-            fetch(`/performance/search_text?query=${value}`)
-                .then(response => response.text())
-                .then(data => {
-                    const parser = new DOMParser();
-                    const xmlDoc = parser.parseFromString(data, 'application/xml');
-                    const results = document.getElementById('results');
-                    results.innerHTML = '';
+            // document.getElementById('search'): Получает элемент с идентификатором 'search', который представляет собой поле ввода.
+            // .value: Свойство value возвращает текущее значение поля ввода. 
+            // Это значение будет использоваться как параметр для поиска.
+            const query = document.getElementById('search').value;
 
-                    const resultElements = xmlDoc.getElementsByTagName('result');
-                    for (let i = 0; i < resultElements.length; i++) {
-                        const file = resultElements[i].getElementsByTagName('file')[0].textContent;
-                        const text = resultElements[i].getElementsByTagName('text')[0].textContent;
-                        const li = document.createElement('li');
-                        li.textContent = `${file}: ${text}`;
-                        results.appendChild(li);
-                    }
+        // Отправляем GET-запрос на сервер с параметром 'query'
+        // Функция fetch() используется для отправки HTTP-запроса. 
+        fetch(`/performance/search_db/?query=${query}`)
+        // Метод then() используется для обработки результата выполнения промиса, возвращаемого функцией fetch()
+            .then(response => {
+                // if (!response.ok): Проверяет, успешен ли ответ от сервера.
+                if (!response.ok) {
+                    throw new Error('Ошибка сети: ' + response.status);
+                }
+                // Метод json() объекта ответа извлекает тело ответа и преобразует его в формат JSON.
+                return response.json();  // Ожидаем, что сервер вернет JSON
+            })
+            // обрабатывает данные, полученные от сервера в формате JSON. 
+            .then(data => {
+                // Получает элемент с идентификатором 'results', который предназначен для отображения результатов поиска.
+                const results = document.getElementById('results');
+                results.innerHTML = ''; // Очищаем результаты
+
+                // Метод forEach() перебирает каждый элемент массива
+                data.results.forEach(student => {
+                    // Создает новый элемент списка (<li>), который будет добавлен в список результатов.
+                    const li = document.createElement('li');
+                    // Устанавливает текстовое содержимое элемента списка.
+                    li.textContent = `${student.name} - ${student.subject}: ${student.grade}`;
+                    // Добавляет созданный элемент списка (li) в элемент результатов (results)
+                    results.appendChild(li);
                 });
-
+            })
+            // Метод catch() обрабатывает любые ошибки, возникшие во время выполнения предыдущих промисов
+            // console.error(...): Выводит сообщение об ошибке в консоль разработчика браузера
+            .catch(error => console.error('Error:', error));  // Выводим ошибку в консоль
         });
     </script>
+
 </body>
 </html>
